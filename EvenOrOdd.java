@@ -22,17 +22,14 @@ public class EvenOrOdd {
     public void printOdd() {
         synchronized (lock) {
             while (counter <= 10) {
-                // Если сейчас четное (не мой ход) -> ждем
                 if (counter % 2 == 0) {
                     try {
                         lock.wait();
                     } catch (InterruptedException e) { }
                 }
                 else {
-                    // Мой ход (нечетное)
                     System.out.println(Thread.currentThread().getName() + ": " + counter);
                     counter++;
-                    // Будим четный поток
                     lock.notify();
                 }
             }
@@ -42,21 +39,19 @@ public class EvenOrOdd {
     public void printEven() {
         synchronized (lock) {
             while (counter <= 10) {
-                // Если сейчас нечетное (не мой ход) -> ждем
                 if (counter % 2 != 0) {
                     try {
                         lock.wait();
                     } catch (InterruptedException e) { }
                 }
                 else {
-                    // Мой ход (четное)
                     System.out.println(Thread.currentThread().getName() + ": " + counter);
                     counter++;
-                    // Будим нечетный поток
                     lock.notify();
                 }
             }
             lock.notify();
         }
     }
+
 }
