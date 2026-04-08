@@ -7,15 +7,12 @@ public class Analytics {
     Map<String, List<Product>> groupByCategory(List<Product> products) {
         return products.stream()
                 .collect(Collectors.groupingBy(Product::getCategory));
-        //Тут немного не поняла,
-        // второй параметр (Collector) — это что делать со значениями каждой группы.
-        // Без него используется toList() по умолчанию.
-        //То есть нужно явно привести к мапе?
+     
     }
     Optional<Product> findMostExpensive(List<Product> products) {
         Optional<Product> mostExpensive = products.stream()
                 .max(Comparator.comparingDouble(Product::getPrice));
-        //Пришлось прибегнуть к помощи Ии, тк я не смогла понять как работает max и ifPresent(я не знала что он не возвращает значение)
+       
         mostExpensive.ifPresent(p ->
                 System.out.println("Most expensive product is : " + p)
         );
@@ -91,13 +88,12 @@ public class Analytics {
         orders.add(new Order(124, "David",
                 List.of(allProducts.get(0), allProducts.get(3), allProducts.get(7), allProducts.get(19)),
                 List.of()));
-        // тут тоже слишком нагружено, не знаю как создавать лаконично заказы
+ 
 
         Analytics analytics = new Analytics();
         Product mostExp = analytics.findMostExpensive(allProducts)
                 .orElseThrow(() -> new IllegalArgumentException("Нет подходящего продукта"));
-        //не поняла как именно использовать orElseThrow,
-        // как я поняла, если не будет значения выкинется NoSuchElementException, а если будет то оно выведется
+       
         System.out.println(mostExp);
 
         Map<String, List<Product>> sortedProducts = analytics.groupByCategory(allProducts);
